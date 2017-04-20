@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Countries and Regions</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<h1>Countries and Regions</h1>
+
+	<div style="margin-bottom:2em">
+		<a href="index.html">Home</a>
+		&gt;
+		Countries and Regions
+	</div>
+
+	<table>
+		<tr>
+			<td>Get All Countries</td>
+			<td></td>
+			<td><input type="button" value="Get Countries" id="getCountriesButton" /></td>
+		</tr>
+		<tr>
+			<td>Get Regions for Country ID:</td>
+			<td><input type="text" value="USA" id="countryid" /></td>
+			<td><input type="button" value="Get Regions" id="getRegionsButton" /></td>
+		</tr>
+	</table>
+
+	<p id="dumpResults" style="white-space:pre"></p>
+	
+	<script src="scripts/demo.js"></script>
+	<script src="scripts/demo-general.js"></script>
+	<script>
+	
+		if (!app_isAuthenticated())
+			window.location.href = 'index.html';
+
+		$('#getCountriesButton').click(function (e) {
+			e.preventDefault();
+			$('#dumpResults').html('');
+			app_getCountries(function () {
+				console.log('Countries found:', this);
+				$('#dumpResults').html(JSON.stringify(this, null, '    '));
+			});
+		});
+
+		$('#getRegionsButton').click(function (e) {
+			e.preventDefault();
+			$('#dumpResults').html('');
+			var countryid = $('#countryid').val();
+			app_getRegions(countryid, function () {
+				console.log('Regions found:', this);
+				$('#dumpResults').html(JSON.stringify(this, null, '    '));
+			});
+		});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Customer Search</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<h1>Customer Search Example</h1>
+
+	<div style="margin-bottom:2em">
+		<a href="index.html">Home</a>
+		&gt;
+		Customer Search
+	</div>
+
+	<form id="searchInputForm">
+		<input type="hidden" name="ElanBusinessModule" value="BW" />
+		<input type="hidden" name="WebsiteID" value="153" />
+		<table>
+			<tr>
+				<td>Last Name</td>
+				<td><input type="text" name="LastName" value="TEC001" /></td>
+			</tr>
+			<tr>
+				<td>City</td>
+				<td><input type="text" name="City" value="Columbus" /></td>
+			</tr>
+			<tr>
+				<td>Region Code</td>
+				<td><input type="text" name="RegionCode" value="OH" /></td>
+			</tr>
+			<tr>
+				<td>Postal Code</td>
+				<td><input type="text" name="PostalCode" value="43201" /></td>
+			</tr>
+			<tr>
+				<td>Country Code</td>
+				<td><input type="text" name="CountryCode" value="US" /></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><input type="text" name="Email" value="indvtec001@msgldemo.com" /></td>
+			</tr>
+			<tr>
+				<td>Phone</td>
+				<td><input type="text" name="Phone" value="888-555-1212" /></td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Search" id="searchButton" /></td>
+			</tr>
+		</table>
+	</form>
+
+	<p id="dumpResults" style="white-space:pre">
+
+	</p>
+	
+	<script src="scripts/demo.js"></script>
+	<script src="scripts/demo-customerservice.js"></script>
+	<script>
+	
+		if (!app_isAuthenticated())
+			window.location.href = 'index.html';
+
+		$('#searchInputForm').submit(function (e) {
+			e.preventDefault();
+			$('#dumpResults').html('');
+			app_findCustomer($('#searchInputForm').serialize(), function () {
+				console.log('Customer found:', this);
+				$('#dumpResults').html(JSON.stringify(this, null, '    '));
+			});
+		});
+
+	</script>
+</body>
+</html>

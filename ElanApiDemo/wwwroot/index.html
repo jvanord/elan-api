@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>&Eacute;lan API Demo</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>&Eacute;lan API Demo</h1>
+	<p id="status">Checking authorization status ...</p>
+	<p id="buttons" style="display:none">
+		<button id="login-button">Log In</button>
+		<button id="logout-button">Log Out</button>
+	</p>
+	<div id="links" style="display:none">
+		<h3>Demo Pages</h3>
+		<p><a href="product.html">Find a Product</a></p>
+		<p><a href="customer.html">Find a Customer</a></p>
+		<p><a href="countries.html">View Countries and Regions</a></p>
+	</div>
+	<script src="scripts/demo.js"></script>
+	<script>
+			
+		if (app_isAuthenticated()){
+			$('#login-button').hide();
+			$('#logout-button').show();
+			$('#status').text('You are logged in to the API!').css('color', '#090');
+			$('#links').show();
+		}
+		else{
+			$('#login-button').show();
+			$('#logout-button').hide();
+			$('#status').text('You are NOT logged in to the API!').css('color', '#900');
+			$('#links').hide();
+		}
+		$('#buttons').show();
+		
+		$('#login-button').click(function(e){
+			app_logIn(loginSuccessHandler, loginFailHandler);
+		});
+		
+		function loginSuccessHandler(){
+			$('#login-button').hide();
+			$('#logout-button').show();
+			$('#status').text('SUCCESS! You have been LOGGED IN to the API!').css('color', '#090');
+			$('#links').show();
+		}
+		
+		function loginFailHandler(){
+			$('#status').text('OOPS! Something went wrong trying to LOG IN to the API!').css('color', '#f00');
+		}
+
+		$('#logout-button').click(function (e) {
+			app_logOut();
+			$('#login-button').show();
+			$('#logout-button').hide();
+			$('#status').text('SUCCESS! You have been LOGGED OUT of the API!').css('color', '#900');
+			$('#links').hide();
+		});
+
+	</script>
+</body>
+</html>

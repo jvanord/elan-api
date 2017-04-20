@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Product Search</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<h1>Product Search Example</h1>
+
+	<div style="margin-bottom:2em">
+		<a href="index.html">Home</a>
+		&gt;
+		Product Search
+	</div>
+
+	<table>
+		<tr>
+			<td>Product ID</td>
+			<td><input type="text" value="TEC001" id="productid" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="button" onclick="searchDB()" value="Search" id="searchButton" /></td>
+		</tr>
+	</table>
+
+	<p id="dumpResults" style="white-space:pre">
+
+	</p>
+	
+	<script src="scripts/demo.js"></script>
+	<script src="scripts/demo-book.js"></script>
+	<script>
+	
+		if (!app_isAuthenticated())
+			window.location.href = 'index.html';
+
+		function searchDB() {
+			$('#dumpResults').html('');
+			var productid = $('#productid').val();
+			app_getProduct(productid, function () {
+				console.log('Product found:', this);
+				$('#dumpResults').html(JSON.stringify(this, null, '    '));
+			});
+		}
+
+	</script>
+</body>
+</html>
